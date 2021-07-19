@@ -6,31 +6,29 @@ The MicroSalmon repository contains compresensive miRNA target and cis-regulator
 - [Dependencies](#dependencies)
 - [mRNA_Search.py](#mrna_searchpy)
   * [Usage](#usage)
-  * [Arguments:](#arguments-)
-  * [Output Structure:](#output-structure-)
-- [miRNA_Search.py](#mirna-searchpy)
+  * [Arguments:](#arguments)
+  * [Output Structure:](#output-structure)
+- [miRNA_Search.py](#mirna_searchpy)
   * [Usage](#usage-1)
-  * [Arguments:](#arguments--1)
-  * [Output Structure:](#output-structure--1)
-- [Gene_Symbol_Search.py](#gene-symbol-searchpy)
+  * [Arguments:](#arguments-1)
+  * [Output Structure:](#output-structure-1)
+- [Gene_Symbol_Search.py](#gene_symbol_searchpy)
   * [Usage](#usage-2)
-  * [Arguments:](#arguments--2)
-  * [Output Structure:](#output-structure--2)
-- [GO_ID_Search.py](#go-id-searchpy)
+  * [Arguments:](#arguments-2)
+  * [Output Structure:](#output-structure-2)
+- [GO_ID_Search.py](#go_id_searchpy)
   * [Usage](#usage-3)
-  * [Arguments:](#arguments--3)
-  * [Output Structure:](#output-structure--3)
+  * [Arguments:](#arguments-3)
+  * [Output Structure:](#output-structure-3)
 - [DATA file structure](#data-file-structure)
-  * [SQANTI_OmicsBox_Annotation.tsv](#sqanti-omicsbox-annotationtsv)
+  * [SQANTI_OmicsBox_Annotation.tsv](#sqanti_omicsbox_annotationtsv)
   * [miRNAome.fa](#mirnaomefa)
-  * [mRNA_3UTR.fasta](#mrna-3utrfasta)
-  * [CD-Hit_Clusters.txt](#cd-hit-clusterstxt)
-  * [RNAhybrid_target_prediction_part_X](#rnahybrid-target-prediction-part-x)
-  * [RNAhybrid_plus_2.txt](#rnahybrid-plus-2txt)
-  * [Teiresias_k1000_prob_cutoff_5_no_miRNA_seed.txt](#teiresias-k1000-prob-cutoff-5-no-mirna-seedtxt)
-  * [uscan_output.tx](#uscan-outputtx)
-
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+  * [mRNA_3UTR.fasta](#mrna_3utrfasta)
+  * [CD-Hit_Clusters.txt](#cd-hit_clusterstxt)
+  * [RNAhybrid_target_prediction_part_X](#rnahybrid_target_prediction_part_x)
+  * [RNAhybrid_plus_2.txt](#rnahybrid_plus_2txt)
+  * [Teiresias_k1000_prob_cutoff_5_no_miRNA_seed.txt](#teiresias_k1000_prob_cutoff_5_no_mirna_seedtxt)
+  * [uscan_output.txt](#uscan_outputtxt)
 
 
 ## Dependencies
@@ -499,7 +497,7 @@ Teiresias prediction results for all predicted motifs with occurence more than f
 ```
 3350	2047	AGTGCACTA 1 184 11 64 12 167 14 400...
 ```
-### uscan_output.tx
+### uscan_output.txt
 UTRScan prediction results. The first 52 lines contain a header describing all the motif classes. The remaining lines all contain an entry for a single predicted motif, containing the 3'UTR cluster it was found it, the length of the representative sequence, the class of the motif, the motifs start and end position in brackets, and the entire motif sequence
 ```
 CG193.3 1893 : 15-LOX-DICE [101,134] : CTCTACCCCC CACT ACG  CCCTTGCTCT GAGC AGG
