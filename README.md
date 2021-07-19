@@ -2,6 +2,35 @@
 
 The MicroSalmon repository contains compresensive miRNA target and cis-regulatory motif prediction results for the Atlantic Salmon transcriptome, along with search scripts for exploring the dataset. Please cite Ramberg et al (DOI: To be added) if you make use of these data or programs in academic research.
 
+- [Dependencies](#dependencies)
+- [mRNA_Search.py](#mrna_searchpy)
+  * [Usage](#usage)
+  * [Arguments:](#arguments)
+  * [Output Structure:](#output-structure-)
+- [miRNA_Search.py](#mirna-searchpy)
+  * [Usage](#usage-1)
+  * [Arguments:](#arguments--1)
+  * [Output Structure:](#output-structure--1)
+- [Gene_Symbol_Search.py](#gene-symbol-searchpy)
+  * [Usage](#usage-2)
+  * [Arguments:](#arguments--2)
+  * [Output Structure:](#output-structure--2)
+- [GO_ID_Search.py](#go-id-searchpy)
+  * [Usage](#usage-3)
+  * [Arguments:](#arguments--3)
+  * [Output Structure:](#output-structure--3)
+- [DATA file structure](#data-file-structure)
+  * [SQANTI_OmicsBox_Annotation.tsv](#sqanti-omicsbox-annotationtsv)
+  * [miRNAome.fa](#mirnaomefa)
+  * [mRNA_3UTR.fasta](#mrna-3utrfasta)
+  * [CD-Hit_Clusters.txt](#cd-hit-clusterstxt)
+  * [RNAhybrid_target_prediction_part_X](#rnahybrid-target-prediction-part-x)
+  * [RNAhybrid_plus_2.txt](#rnahybrid-plus-2txt)
+  * [Teiresias_k1000_prob_cutoff_5_no_miRNA_seed.txt](#teiresias-k1000-prob-cutoff-5-no-mirna-seedtxt)
+  * [uscan_output.tx](#uscan-outputtx)
+
+
+
 ## Dependencies
 
 The included search scripts have no external dependencies beyond Python 3.  
@@ -467,4 +496,10 @@ ssa-miR-23c-5p	SS1348.7	4	PITA, miRanda, TargetSpy, RNAhybrid
 Teiresias prediction results for all predicted motifs with occurence more than five times over what is expected randomly by the nucleotide distribution, and which do not have the seed region of a known miRNA as a subsequence. Each line cotains the total number of occurences of the motif in the 3'UTRome, followed by a tab, followed by the number of different 3'UTR clusters the motif was found it, followed by a tab, followed by the sequence of the motif, and a series of number pairs indicating the cluster and position of all occurences of the motif, separated by spaces. The first number in a pair indicates the 3'UTR using 0-based conting, based on the order in CD-Hit_Clusters.txt, so 0 = SS4.2, 1 = SS9.2;SS9.1;SS9.4;SS9.5;SS9.6;SS9.7, 2 = SS14.1, etc. The second number in a pair indicates the start position of the motif in the 3'UTR, again using 0 based counting, so 0 is the first base, 1 is the second, etc.
 ```
 3350	2047	AGTGCACTA 1 184 11 64 12 167 14 400...
+```
+### uscan_output.tx
+UTRScan prediction results. The first 52 lines contain a header describing all the motif classes. The remaining lines all contain an entry for a single predicted motif, containing the 3'UTR cluster it was found it, the length of the representative sequence, the class of the motif, the motifs start and end position in brackets, and the entire motif sequence
+```
+CG193.3 1893 : 15-LOX-DICE [101,134] : CTCTACCCCC CACT ACG  CCCTTGCTCT GAGC AGG
+CG1061.2 1441 : 15-LOX-DICE [776,809] : CCCCCCCTAC TCTC AGG  CCCCCCCTAC TCTC AGG
 ```
