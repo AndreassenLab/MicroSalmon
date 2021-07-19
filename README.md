@@ -2,10 +2,11 @@
 
 The MicroSalmon repository contains compresensive miRNA target and cis-regulatory motif prediction results for the Atlantic Salmon transcriptome, along with search scripts for exploring the dataset. Please cite Ramberg et al (DOI: To be added) if you make use of these data or programs in academic research.
 
+## Table of contents
 - [Dependencies](#dependencies)
-- [mRNA_Search.py](#mrna_searchpy)
+- [mRNA_Search.py](#mrna-searchpy)
   * [Usage](#usage)
-  * [Arguments:](#arguments)
+  * [Arguments:](#arguments-)
   * [Output Structure:](#output-structure-)
 - [miRNA_Search.py](#mirna-searchpy)
   * [Usage](#usage-1)
@@ -29,6 +30,7 @@ The MicroSalmon repository contains compresensive miRNA target and cis-regulator
   * [Teiresias_k1000_prob_cutoff_5_no_miRNA_seed.txt](#teiresias-k1000-prob-cutoff-5-no-mirna-seedtxt)
   * [uscan_output.tx](#uscan-outputtx)
 
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 
 ## Dependencies
