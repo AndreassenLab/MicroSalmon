@@ -4,7 +4,7 @@ The MicroSalmon repository contains compresensive miRNA target and cis-regulator
 
 ## Table of contents
 - [Dependencies](#dependencies)
-- [mRNA_Search.py](#mrna-searchpy)
+- [mRNA_Search.py](#mrna_searchpy)
   * [Usage](#usage)
   * [Arguments:](#arguments-)
   * [Output Structure:](#output-structure-)
