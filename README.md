@@ -4,6 +4,7 @@ The MicroSalmon repository contains compresensive miRNA target and cis-regulator
 
 ## Table of contents
 - [Dependencies](#dependencies)
+- [General usage note](#general-usage-note)
 - [mRNA_Search.py](#mrna_searchpy)
   * [Usage](#usage)
   * [Arguments:](#arguments)
@@ -36,6 +37,9 @@ The MicroSalmon repository contains compresensive miRNA target and cis-regulator
 The included search scripts have no external dependencies beyond Python 3.  
 Additionally, all the scripts are set up to be able to take arguments interactively simply by running the programs with no arguments, allowing for use without a command line terminal.  
 All scripts must be in the same folder as the DATA and OUTPUT folders to function.
+
+## General usage note
+All miRNA, Accession Number, SeqID, gene symbol and GO ID queries are case sensitive, and must be written as shown in the files SQANTI_OmicsBox_Annotation.tsv or miRNAome.fa, or in any of the search outputs, for the search scripts to recognize them.
 
 ## mRNA_Search.py
 ### Usage
