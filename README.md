@@ -1,6 +1,6 @@
 # MicroSalmon
 
-The MicroSalmon repository contains compresensive miRNA target and cis-regulatory motif prediction results for the Atlantic Salmon transcriptome, along with search scripts for exploring the dataset. Please cite Ramberg et al (DOI: To be added) if you make use of these data or programs in academic research.
+The MicroSalmon repository contains compresensive miRNA target and cis-regulatory motif prediction results for the Atlantic Salmon transcriptome, along with search scripts for exploring the dataset. Please cite Ramberg et al (DOI: 10.3389/fgene.2021.656334 and to be added) if you make use of these data or programs in academic research, and include this citation notice with any modified version of this database or any other work including all or part of it.
 
 ## Table of contents
 - [Dependencies](#dependencies)
@@ -502,7 +502,7 @@ Teiresias prediction results for all predicted motifs with occurence more than f
 3350	2047	AGTGCACTA 1 184 11 64 12 167 14 400...
 ```
 ### uscan_output.txt
-UTRScan prediction results. The first 52 lines contain a header describing all the motif classes. The remaining lines all contain an entry for a single predicted motif, containing the 3'UTR cluster it was found it, the length of the representative sequence, the class of the motif, the motifs start and end position in brackets, and the entire motif sequence
+UTRScan prediction results. The first 52 lines contain a header describing all the motif classes. The remaining lines all contain an entry for a single predicted motif, containing the 3'UTR cluster it was found in, the length of the representative sequence, the class of the motif, the motifs start and end position in brackets, and the entire motif sequence
 ```
 CG193.3 1893 : 15-LOX-DICE [101,134] : CTCTACCCCC CACT ACG  CCCTTGCTCT GAGC AGG
 CG1061.2 1441 : 15-LOX-DICE [776,809] : CCCCCCCTAC TCTC AGG  CCCCCCCTAC TCTC AGG
