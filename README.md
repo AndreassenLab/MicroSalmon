@@ -496,8 +496,8 @@ A tab separated value file showing which prediction tools support a given mRNA/m
 ssa-miR-218b-5p	SS581.13	4	PITA, miRanda, TargetSpy, RNAhybrid
 ssa-miR-23c-5p	SS1348.7	4	PITA, miRanda, TargetSpy, RNAhybrid
 ```
-### Teiresias_k1000_prob_cutoff_5_no_miRNA_seed.txt
-Teiresias prediction results for all predicted motifs with occurence more than five times over what is expected randomly by the nucleotide distribution, and which do not have the seed region of a known miRNA as a subsequence. Each line cotains the total number of occurences of the motif in the 3'UTRome, followed by a tab, followed by the number of different 3'UTR clusters the motif was found it, followed by a tab, followed by the sequence of the motif, and a series of number pairs indicating the cluster and position of all occurences of the motif, separated by spaces. The first number in a pair indicates the 3'UTR using 0-based conting, based on the order in CD-Hit_Clusters.txt, so 0 = SS4.2, 1 = SS9.2;SS9.1;SS9.4;SS9.5;SS9.6;SS9.7, 2 = SS14.1, etc. The second number in a pair indicates the start position of the motif in the 3'UTR, again using 0 based counting, so 0 is the first base, 1 is the second, etc.
+### Teiresias_k1000_prob_cutoff_5.txt
+Teiresias prediction results for all predicted motifs with occurence more than five times over what is expected randomly by the nucleotide distribution. Each line cotains the total number of occurences of the motif in the 3'UTRome, followed by a tab, followed by the number of different 3'UTR clusters the motif was found it, followed by a tab, followed by the sequence of the motif, and a series of number pairs indicating the cluster and position of all occurences of the motif, separated by spaces. The first number in a pair indicates the 3'UTR using 0-based conting, based on the order in CD-Hit_Clusters.txt, so 0 = SS4.2, 1 = SS9.2;SS9.1;SS9.4;SS9.5;SS9.6;SS9.7, 2 = SS14.1, etc. The second number in a pair indicates the start position of the motif in the 3'UTR, again using 0 based counting, so 0 is the first base, 1 is the second, etc.
 ```
 3350	2047	AGTGCACTA 1 184 11 64 12 167 14 400...
 ```
