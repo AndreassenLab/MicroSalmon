@@ -1,0 +1,251 @@
+#!/usr/bin/env python3
+
+import os,sys
+from argparse import ArgumentParser
+
+
+
+parser = ArgumentParser()
+parser.add_argument("-q", "--query", help="Query IDs, one or more mature miRNA IDs separated by semicolons, e.g -q ssa-let-7a-4-5-3p;ssa-let-7a-3-5-5p")
+parser.add_argument("-i", "--query_file", help="Query filename. Must be a list of mature miRNA IDs, one per line. At least one of Input_File or Query is required.")
+parser.add_argument("-p", "--prefix", help="Optional output prefix. If not included, output filename will be based only on the query ID.")
+parser.add_argument("-c", "--complexity", default=0.27, type=float, help="Minimum Trifonov Linguistic Complexity for Teiresias motifs. (Default: 0.27)")
+parser.add_argument("-u", "--utr", default=False, action="store_true", help="Exclude complete 3'UTR sequence from output.")
+parser.add_argument("-a", "--annotation", default=False, action="store_true", help="Exclude gene and GO annotation from output.")
+parser.add_argument("-m", "--utrscan_motifs", default=False, action="store_true", help="Exclude UTRscan results from output.")
+parser.add_argument("-t", "--teiresias_motifs", default=False, action="store_true", help="Exclude Teiresias results from output.")
+parser.add_argument("-s", "--target_summary", default=False, action="store_true", help="Exclude summary on target transcripts, genes and GOs from output.")
+
+
+if not len(sys.argv) > 1:
+    print("No command line arguments provided. Please provide arguments below. For help, type -h")
+    sys.argv.extend(input("Args: ").split())
+    
+args = parser.parse_args()
+
+if not args.query and not args.query_file:
+    print("No query provided. Include either a query or a query file.")
+    sys.exit(-1)
+
+if args.query_file:
+    if not os.path.exists(args.query_file):
+        print("Query file does not exist")
+        sys.exit(-1)
+
+
+f=open("DATA/SQANTI_OmicsBox_Annotation.tsv","r")
+lines = f.readlines()
+f.close()
+
+annotation_dict = {}
+seqid_to_accs = {}
+for line in lines[1:]:
+    annotation_dict[line.split("\t")[1]]=line.split("\t")
+    seqid_to_accs[line.split("\t")[1]]=line.split("\t")[0]
+
+f=open("DATA/uscan_output.txt","r")
+lines = f.readlines()
+f.close()
+
+uscan_dict = {}
+
+for line in lines[48:]:
+    if line.split(" ")[0].split(";")[0] not in uscan_dict:
+        for ID in line.split(" ")[0].split(";"):
+            uscan_dict[ID] = [line.split(" : ")[1] + " " + line.split(" : ")[2]]
+    else:
+        for ID in line.split(" ")[0].split(";"):
+            uscan_dict[ID] += [line.split(" : ")[1] + " " + line.split(" : ")[2]]
+
+f=open("DATA/mRNA_3UTR.fasta","r")
+lines = f.readlines()
+f.close()
+
+utr_dict = {}
+
+for line in lines:
+    if line[0] == ">":
+        ID = line.split(";")[1].strip()
+    else:
+        utr_dict[ID] = line.strip()
+
+f=open("DATA/CD-Hit_Clusters.txt","r")
+lines = f.readlines()
+f.close()
+
+counter = 0
+tnum_dict = {}
+
+for line in lines:
+    for ID in line.strip("\n").split(";"):
+        tnum_dict[ID] = str(counter)
+    counter += 1
+
+f=open("DATA/Teiresias_k1000_prob_cutoff_5.txt","r")
+lines = f.readlines()
+f.close()
+
+teiresias_dict = {}
+
+for line in lines:
+    s = line.split("\t")[2].split(" ")[0]
+    c = 0
+    for base in ["A","T","G","C"]:
+        if base in s:
+            c += 1
+    c = c/4
+    for k in range(2,len(s)):
+        words = set()
+        for pos in range(0,len(s)-k+1):
+            words.add(s[pos:pos+k])
+        c = c*len(words)/min(4**k,len(s)-k+1)
+    if c > args.complexity:
+        counter = 0
+        for numb in line.strip("\n").split("\t")[2].split(" ")[1:]:
+            if counter == 0:
+                ID = numb
+                counter = 1
+            else:
+                if ID not in teiresias_dict:
+                    teiresias_dict[ID] = [s + " [" + str(int(numb)+1) + "," + str(int(numb)+1+len(s)) + "] " + str(c) + "\n"]
+                else:
+                    teiresias_dict[ID] += [s + " [" + str(int(numb)+1) + "," + str(int(numb)+1+len(s)) + "] " + str(c) + "\n"]
+                counter = 0
+
+
+RNAhybrid_dict = {}
+for numb in ["1","2","3","4"]:
+    f=open("DATA/RNAhybrid_target_prediction_part_"+numb+".txt","r")
+    lines = f.readlines()
+    f.close()
+
+    for line in lines:
+        if line.split(":")[2] not in RNAhybrid_dict:
+            RNAhybrid_dict[line.split(":")[2]] = [line.strip("\n").split(":")]
+        else:
+            RNAhybrid_dict[line.split(":")[2]] += [line.strip("\n").split(":")]
+                
+f=open("DATA/RNAhybrid_plus_2.txt","r")
+lines = f.readlines()
+f.close()
+
+prediction_dict = {}
+
+for line in lines:
+    for ID in line.split("\t")[1].split(";"):
+        prediction_dict[ID+line.split("\t")[0]] = line.split("\t")[3]
+
+f=open("DATA/miRNAome.fa","r")
+lines = f.readlines()
+f.close()
+
+miRNA_dict = {}
+
+for line in lines:
+    if line[0] == ">":
+        ID = line[1:].strip()
+    else:
+        miRNA_dict[ID] = line
+
+queries = []
+
+if args.query:
+    queries += args.query.split(";")
+
+if args.query_file:
+    f=open(args.query_file,"r")
+    lines = f.readlines()
+    f.close()
+    for line in lines:
+        queries.append(line.strip())
+
+for counter, query in enumerate(queries):
+    print("Searching query " + str(counter+1) + " of " + str(len(queries)))
+    skip = 0
+    if query in RNAhybrid_dict:
+        print(query)
+    else:
+        print(query + " not found. Check spelling.")
+        skip = 1
+    if skip == 0:
+        output = "Input miRNA: " + query + "\nMature miRNA sequence: " + miRNA_dict[query]
+        targets = set()
+        if query in RNAhybrid_dict:
+            for MRE in RNAhybrid_dict[query]:
+                for seqid in MRE[0].split(";"):
+                    targets.add(seqid)
+        targets = list(targets)
+        targets.sort()
+        if not args.target_summary:
+            accs = []
+            genesordered = []
+            genes = set()
+            GOIDs = []
+            GOTs = []
+            for seqid in targets:
+                accs.append(seqid_to_accs[seqid])
+                if "-NA-" not in annotation_dict[seqid][4] and annotation_dict[seqid][4] != "":
+                    genes.add(annotation_dict[seqid][4])
+                    genesordered.append(annotation_dict[seqid][4])
+                elif "novelGene" not in annotation_dict[seqid][2] and annotation_dict[seqid][2] != "" and "CG" not in annotation_dict[seqid][1]:
+                    genes.add(annotation_dict[seqid][2])
+                    genesordered.append(annotation_dict[seqid][2])
+                else:
+                    genesordered.append("--NA--")
+                for GOID in annotation_dict[seqid][6].split(","):
+                    if GOID not in GOIDs:
+                        GOIDs.append(GOID)
+                for GOT in annotation_dict[seqid][7].split(","):
+                    if GOT not in GOTs:
+                        GOTs.append(GOT)
+            genes = list(genes)
+            genes.sort()
+            output += "\nNumber of Target Transcripts: " + str(len(targets)) + "\nNumber of unique target genes: " +str(len(genes)) + "\nTarget Transcript Accessions: " + ";".join(accs) + "\nTarget Transcript SeqIDs in TSA: " + ";".join(targets) + "\nTarget Transcript Annotated Genes: " + ";".join(genesordered)
+            output += "\n\nNumber of unique GO Terms in target transcripts: " + str(len(GOTs)) + "\nGO Terms: " + ";".join(GOTs) + "\nGO IDs: " + ";".join(GOIDs)+"\n"
+        
+        for counter, seqid in enumerate(targets):
+            output += "\nTranscript " + str(counter+1) + ":\n\nAccession Number; " + seqid_to_accs[seqid] + "\nSeqID in TSA: " + seqid + "\n3'UTR length: " + str(len(utr_dict[seqid])) +  "\n"
+            if not args.utr:
+                output += "\n3'UTR Sequence: " + utr_dict[seqid] + "\n"
+            if not args.annotation:
+                output += "\nSQANTI Annotation Gene Symbol: " + annotation_dict[seqid][2] + "\nSQANTI Annotation Transcript ID: " + annotation_dict[seqid][3] + "\n\nBLAST Annotation Gene Symbol: " + annotation_dict[seqid][4] + "\nBLAST Annotation Description: " + annotation_dict[seqid][5] + "\n\nGO Terms: " + annotation_dict[seqid][7] + "\nGO IDs: " + annotation_dict[seqid][6] + "\n"
+            if not args.utrscan_motifs:
+                output += "\nUTRScan Motifs [Position in 3'UTR] Sequence:\n"
+                if seqid in uscan_dict:
+                    motifs = []
+                    for motif in uscan_dict[seqid]:
+                        motifs.append(motif)
+                    motifs.sort()
+                    for motif in motifs:
+                        output += motif
+                else:
+                    output += "No hits\n"
+            if not args.teiresias_motifs:
+                output += "\nTeiresias Motifs [Position in 3'UTR] Linguistic Complexity(Threshold " + str(args.complexity) + "):\n"
+                if tnum_dict[seqid] in teiresias_dict:
+                    motifs = []
+                    for motif in teiresias_dict[tnum_dict[seqid]]:
+                        motifs.append(motif)
+                    motifs.sort()
+                    for motif in motifs:
+                        output += motif
+                else:
+                    output += "No hits\n"
+            output += "\nTarget prediction supported by: " + prediction_dict[seqid+query]
+            for MRE in RNAhybrid_dict[query]:
+                if seqid in MRE[0]:
+                    output += "\nRNAhybrid output:\nmfe: " + MRE[4] + " kcal/mol\n\nPosition in 3'UTR: "  + MRE[6] + "\nTarget 5' " + MRE[7]
+                    output += " 3'\n          " + MRE[8] + "\n          " + MRE[9] + "\nmiRNA  3' " + MRE[10] + " 5'\n"
+            
+
+        if args.prefix:
+            outputfile = "OUTPUT/" + args.prefix + "." + query + ".txt"
+        else:
+            outputfile = "OUTPUT/" + query + ".txt"
+        f=open(outputfile,"w")
+        f.write(output)
+        f.close()
+if args.prefix:
+    print("Search complete. Results are found in the OUTPUT folder with the prefix " + args.prefix + ".")
+else:
+    print("Search complete. Results are found in the OUTPUT folder.")
