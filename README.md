@@ -52,7 +52,7 @@ All outputs are stored in the OUTPUT folder.
 -h, --help Shows help message and exits
 
 Search terms can be provided as an argument, or by giving a file with one search term per line, or both, in which case all terms from both inputs will be used:  
--q QUERY, --query QUERY                Query IDs, one or more accession numbers or SeqIDs separated by semicolons, e.g -q GIYK01000001;GIYK01000002 or -q SS1.1;SS1.2.  
+-q QUERY, --query QUERY                Query IDs, one accession number or SeqID or a list of multiple accession numbers or SeqIDs in quores separated by spacess, e.g -q "GIYK01000001 GIYK01000002" or -q "SS1.1 SS1.2".  
 -i QUERY_FILE, --query_file QUERY_FILE Query filename. Must be a list of accession numbers or SeqIDs, one per line.
 
 Misc parameters:  
@@ -143,7 +143,7 @@ All outputs are stored in the OUTPUT folder.
 -h, --help Shows help message and exits
 
 Search terms can be provided as an argument, or by giving a file with one search term per line, or both, in which case all terms from both inputs will be used:  
--q QUERY, --query QUERY                Query IDs, one or more mature miRNA IDs separated by semicolons, e.g -q ssa-let-7a-4-5-3p;ssa-let-7a-3-5-5p  
+-q QUERY, --query QUERY                Query IDs, one mature miRNA ID or a list of mmultiple mature miRNA IDs in wuotes separated by spaces, e.g -q "ssa-let-7a-4-5-3p ssa-let-7a-3-5-5p"  
 -i QUERY_FILE, --query_file QUERY_FILE Query filename. Must be a list of mature miRNA IDs, one per line. At least one of Input_File or Query is required.  
 
 Misc parameters:  
@@ -243,7 +243,7 @@ All outputs are stored in the OUTPUT folder.
 -h, --help Shows help message and exits
 
 Search terms can be provided as an argument, or by giving a file with one search term per line, or both, in which case all terms from both inputs will be used. gene symbols are case sensitive, and must be written as given in other search outputs or in the SQANTI_OmicsBox_Annotation.tsv file in the DATA folder:  
--q QUERY, --query QUERY                Query IDs, one or more Gene symbols separated by semicolons, e.g -q ARGI2;mavs  
+-q QUERY, --query QUERY                Query IDs, one Gene symbol or a list of multiple Gene symbols in quotes separated by sspacess, e.g -q "ARGI2 mavs"  
 -i QUERY_FILE, --query_file QUERY_FILE Query filename. Must be a list of Gene Symbols, one per line. At least one of Input_File or Query is required.  
 
 Misc parameters:  
@@ -350,7 +350,7 @@ All outputs are stored in the OUTPUT folder.
 -h, --help Shows help message and exits
 
 Search terms can be provided as an argument, or by giving a file with one search term per line, or both, in which case all terms from both inputs will be used. gene symbols are case sensitive, and must be written as given in other search outputs or in the SQANTI_OmicsBox_Annotation.tsv file in the DATA folder:  
--q QUERY, --query QUERY                Query IDs, one or more GO IDs separated by semicolons, e.g -q GO:0000050;GO:0004053  
+-q QUERY, --query QUERY                Query IDs, one GO ID or a list of multiple GO IDs in quotes separated by spaces, e.g -q "GO:0000050 GO:0004053"  
 -i QUERY_FILE, --query_file QUERY_FILE Query filename. Must be a list of GO IDs, one per line. At least one of Input_File or Query is required.  
 
 Misc parameters:  
