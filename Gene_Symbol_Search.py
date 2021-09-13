@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 
 
 parser = ArgumentParser()
-parser.add_argument("-q", "--query", help="Query IDs, one or more Gene symbols separated by semicolons, e.g -q ARGI2;mavs")
+parser.add_argument("-q", "--query", help="Query IDs, one Gene symbol, or a list of multiple Gene symbols in quotes separated by spaces, e.g -q \"ARGI2 mavs\"")
 parser.add_argument("-i", "--query_file", help="Query filename. Must be a list of Gene Symbols, one per line. At least one of Input_File or Query is required.")
 parser.add_argument("-p", "--prefix", help="Optional output prefix. If not included, output filename will be based only on the query ID.")
 parser.add_argument("-c", "--complexity", default=0.27, type=float, help="Minimum Trifonov Linguistic Complexity for Teiresias motifs. (Default: 0.27)")
@@ -161,7 +161,7 @@ for line in lines:
 queries = []
 
 if args.query:
-    queries += args.query.split(";")
+    queries += args.query.split(" ")
 
 if args.query_file:
     f=open(args.query_file,"r")
@@ -170,6 +170,9 @@ if args.query_file:
     for line in lines:
         queries.append(line.strip())
 
+while "" in queries:
+    queries.remove("")
+        
 for counter, query in enumerate(queries):
     print("Searching query " + str(counter+1) + " of " + str(len(queries)))
     skip = 0
