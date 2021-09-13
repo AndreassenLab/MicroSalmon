@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 
 
 parser = ArgumentParser()
-parser.add_argument("-q", "--query", help="Query IDs, one or more accession numbers or SeqIDs separated by semicolons, e.g -q GIYK01000001;GIYK01000002 or -q SS1.1;SS1.2")
+parser.add_argument("-q", "--query", help="Query IDs, one accession number or SeqID, or a list of multiple accession numbers or SeqIDs in quotes separated by spaces, e.g -q \"GIYK01000001 GIYK01000002\" or -q \"SS1.1 SS1.2\"")
 parser.add_argument("-i", "--query_file", help="Query filename. Must be a list of accession numbers or SeqIDs, one per line. At least one of Input_File or Query is required.")
 parser.add_argument("-p", "--prefix", help="Optional output prefix. If not included, output filename will be based only on the query ID.")
 parser.add_argument("-s", "--seqid", default=False, action="store_true", help="Query is SeqID (Default: Accession number)")
@@ -153,7 +153,7 @@ for line in lines:
 queries = []
 
 if args.query:
-    queries += args.query.split(";")
+    queries += args.query.split(" ")
 
 if args.query_file:
     f=open(args.query_file,"r")
@@ -162,6 +162,9 @@ if args.query_file:
     for line in lines:
         queries.append(line.strip())
 
+while "" in queries:
+    queries.remove("")
+        
 for counter, query in enumerate(queries):
     print("Searching query " + str(counter+1) + " of " + str(len(queries)))
     skip = 0
