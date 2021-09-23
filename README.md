@@ -1,6 +1,6 @@
 # MicroSalmon
 
-The MicroSalmon repository contains compresensive miRNA target and cis-regulatory motif prediction results for the Atlantic Salmon transcriptome, along with search scripts for exploring the dataset. Please cite Ramberg et al (DOI: 10.3389/fgene.2021.656334 and to be added) if you make use of these data or programs in academic research, and include this citation notice with any modified version of this database or any other work including all or part of it.
+The MicroSalmon repository contains compresensive miRNA target and cis-regulatory motif prediction results for the Atlantic Salmon transcriptome, along with search scripts for exploring the dataset. Please cite Ramberg et al (DOI: 10.3389/fgene.2021.656334 and DOI: 10.3390/ncrna7040061) if you make use of these data or programs in academic research, and include this citation notice with any modified version of this database or any other work including all or part of it.
 
 ## Table of contents
 - [Dependencies](#dependencies)
